@@ -17,6 +17,8 @@ const OUTER_WIDTH = TIME_COL_WIDTH + GRID_WIDTH;
 const GRID_PADDING_X = 10;
 const EVENTS_AREA_WIDTH = GRID_WIDTH - GRID_PADDING_X * 2;
 
+const MAX_FIXED_COLS = 5; // 5 * 20% = 100%
+
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(value, max));
 
@@ -75,7 +77,11 @@ export default function Home() {
       ? Math.max(...positionedEvents.map((e) => e.column)) + 1
       : 1;
 
-  const columnWidth = EVENTS_AREA_WIDTH / columnCount;
+  // const columnWidth = EVENTS_AREA_WIDTH / columnCount;
+  const columnWidth =
+    columnCount <= MAX_FIXED_COLS
+      ? EVENTS_AREA_WIDTH * 0.2
+      : EVENTS_AREA_WIDTH / columnCount;
 
   const hours = Array.from({ length: 13 }, (_, i) => 9 + i);
   const halfHours = Array.from({ length: 12 }, (_, i) => 9.5 + i);
